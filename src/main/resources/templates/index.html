@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆</title>
+
+</head>
+
+<style>
+    #main_form {
+        width: 300px;
+        height: 200px;
+        margin: 100px auto;
+
+        background-color: #F0F0F0;
+        border: 1px solid #c2c2c2;
+    }
+
+    #input_content {
+        margin-top: 20px;
+        text-align: center;
+        border: 5px;
+    }
+
+    #verify_image, #submit_btn {
+        text-align: center;
+        margin: 20px auto;
+    }
+</style>
+
+<body>
+
+
+<div id="main_form">
+    <div id="input_content">
+        <input autocomplete="off" autofocus id="verify_input" placeholder="请输入验证码" maxlength="4">
+    </div>
+    <div id="verify_image">
+        <img id="imgVerify" src="getVerify" alt="更换验证码" height="36" width="170" onclick="getVerify(this);">
+    </div>
+
+    <div id="submit_btn">
+        <input type="button" onclick="aVerify()" value="判断是否正确">
+    </div>
+</div>
+
+
+</body>
+<!--<script type="text/javascript" src="./js/jquery.min.js"></script>-->
+<script type="text/javascript"src="http://code.jquery.com/jquery-1.4.1.min.js"></script>
+
+<script>
+
+
+    function getVerify() {
+        $("#verify_input").val("");
+        $("#imgVerify").attr("src", 'getVerify?' + Math.random());//jquery方式
+    }
+
+    function aVerify() {
+        let value = $("#verify_input").val();
+
+        if (value.length < 4) {
+            alert("验证码不足4位 , 请重新输入！！");
+            return 0;
+        }
+
+
+        $.ajax({
+            async: false,
+            type: 'post',
+            url: 'checkVerify',
+            dataType: "json",
+            data: {
+                verifyInput: value
+            },
+            success: function (result) {
+
+                if (result) {
+
+                    if (confirm("验证成功, 再试一次 ！")) {
+                        getVerify();
+                    } else {
+                        window.location.href = "https:www.baidu.com";
+                    }
+
+                } else {
+                    alert("验证失败 , 点击确定重新验证");
+                    getVerify();
+                }
+                // window.location.reload();
+            }
+        });
+    }
+
+
+</script>
+</html>
