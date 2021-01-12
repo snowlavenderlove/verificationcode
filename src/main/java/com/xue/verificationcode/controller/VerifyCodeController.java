@@ -1,6 +1,7 @@
 package com.xue.verificationcode.controller;
 
 import com.xue.verificationcode.common.utils.RandomValidateCodeUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -19,9 +20,10 @@ import javax.servlet.http.HttpSession;
  */
 @Controller
 @RequestMapping("/login")
+@Slf4j
 public class VerifyCodeController {
 
-    private final static Logger logger = LoggerFactory.getLogger(VerifyCodeController.class);
+//    private final static Logger logger = LoggerFactory.getLogger(VerifyCodeController.class);
 
     @RequestMapping("/index")
     public String getIndex(){
@@ -51,7 +53,8 @@ public class VerifyCodeController {
 
         } catch (Exception e) {
 
-            logger.error("获取验证码失败>>>>   ", e);
+//            logger.error("获取验证码失败>>>>   ", e);
+            log.error("获取验证码失败>>>>   ", e);
 
         }
 
@@ -77,7 +80,8 @@ public class VerifyCodeController {
             }
 
         } catch (Exception e) {
-            logger.error("验证码校验失败", e);
+//            logger.error("验证码校验失败", e);
+            log.error("验证码校验失败", e);
             return false;
         }
     }
